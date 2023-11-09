@@ -23,6 +23,9 @@ class MenuItem(Base):
     category = relationship("Category", back_populates="menu_items")
     cuisine = relationship("Cuisine", back_populates="menu_items")
 
+    def __repr__(self) -> str: 
+        return f"MenuItem(id={self.id!r}, name={self.name!r}, description={self.description!r}, price={self.price!r}, spiciness={self.spiciness!r}, category_id={self.category_id!r}, cuisine_id={self.cuisine_id!r})"
+
 
 class Category(Base):
     __tablename__ = "category"
@@ -30,8 +33,9 @@ class Category(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
 
-    # Define back reference for relationship
-    menu_items = relationship("MenuItem", back_populates="category")
+    def __repr__(self) -> str:
+        return f"Category(id={self.id!r}, name={self.name!r})"
+
 
 class Cuisine(Base):
     __tablename__ = "cuisine"
@@ -39,8 +43,10 @@ class Cuisine(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
 
-    # Define back reference for relationship
-    menu_items = relationship("MenuItem", back_populates="cuisine")
+    def __repr__(self) -> str:
+        return f"cuisine(id={self.id!r}, name={self.name!r})"
+
+
 
 
 
