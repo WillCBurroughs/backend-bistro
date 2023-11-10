@@ -3,6 +3,8 @@ from models import MenuItem, Category, Cuisine
 from sqlalchemy import Select
 from sqlalchemy.orm import Session
 from schemas import MenuModel
+from fastapi import APIRouter, HTTPException, status
+
 
 
 def get_menu_items(db: Session): 
@@ -33,3 +35,23 @@ def get_menu_items(db: Session):
 
     return return_menu
 
+
+def get_menu_item_by_id(db: Session, item_id: int):
+    menu_item = db.query(MenuItem).filter(MenuItem.id == item_id).first()
+    
+    if menu_item is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Menu item not found")
+    
+    # Construct Pydantic model manually
+    menu_item_model = MenuModel(
+        id=menu_item.id,
+        title=menu_item.title,
+        description=menu_item.description,
+        price=menu_item.price,
+        spiciness=menu_item.spiciness,
+        category_id=menu_item.category.name,
+        cuisine_id=menu_item.cuisine.name
+    )
+
+    return menu_item_model
+    

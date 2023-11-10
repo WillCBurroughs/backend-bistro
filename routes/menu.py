@@ -18,7 +18,10 @@ def get_db():
 
 @router.get("/all", response_model=List[schemas.MenuModel])
 def get_menu(db: Session = Depends(get_db)): 
-    # Create a crud operation to return the list of heroes 
-    # db.query(models.user)
-    item = crud.get_menu_items(db)
-    return item
+    menu_items = crud.get_menu_items(db)
+    return menu_items
+
+@router.get("/{item_id}", response_model=schemas.MenuModel)
+def get_menu_item(item_id: int, db: Session = Depends(get_db)):
+    menu_item = crud.get_menu_item_by_id(db, item_id)
+    return menu_item
