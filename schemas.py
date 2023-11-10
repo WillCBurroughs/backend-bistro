@@ -16,7 +16,8 @@ class MenuModel(BaseModel):
     description: str 
     price: float 
     spiciness: int 
-    category_id: int 
+    category_id: str
+    cuisine_id: str
 
     class Config:
         orm_mode = True

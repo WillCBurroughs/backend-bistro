@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from models import Hero, Ability, AbilityType, Relationships, RelationshipType
+from models import MenuItem, Cuisine, Category
 from sqlalchemy import select
 from enum import Enum
 
-from routes import heroes
+from routes import menu
 
 app = FastAPI()
-app.include_router(heroes.router)
+app.include_router(menu.router)
 
 @app.get("/")
 async def read_root():
